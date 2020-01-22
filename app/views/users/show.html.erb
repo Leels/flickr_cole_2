@@ -1,0 +1,8 @@
+<div id="cover-photo">
+    <% if current_user.cover_photo.attached? %>
+        <%= image_tag current_user.cover_photo, alt: 'Your Cover Photo' %>
+    <% else %>
+        <%= image_tag 'default-cover.jpg', alt: 'Your Cover Photo' %>
+    <% end %>
+</div>
+<div class="album-content">

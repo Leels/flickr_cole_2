@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>FlickrClone</title>
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+</head>
+
+<body>
+    <header id='site-header'>
+        <div id='site-title'>
+            <h1>flickr_clone</h1>
+        </div>
+        <nav id='site-nav'>
+            <ul>
+                <li>
+                    <a href='/'>Home</a>
+                </li>
+                <li>
+                    <% if current_user %>
+                    <a href='/<%= current_user.username %>'><%= current_user.username %>'s Profile</a>
+                    <% else %>
+                    <a href='/register'>My Profile</a>
+                    <% end %>
+                </li>
+                <li>
+                    <% if current_user %>
+                    <a href='/<%= current_user.username %>/album/new'>New Album</a>
+                    <% else %>
+                    <a href='/register'>New Album</a>
+                    <% end %>
+                </li>
+            </ul>
+        </nav>
+        <div id='site-search'>
+            <label>
+                Search
+                <input type='text' name='text'>
+            </label>
+        </div>
+        <div id='site-userbar'>
+            <% if current_user %>
+                <a href='/<%= current_user.username %>'>
+                    <% if current_user.profile_picture.attached? %>
+                        <%= image_tag current_user.profile_picture, alt: 'Your Profile Picture' %>
+                    <% else %>
+                        <%= image_tag 'default.jpg', alt: 'Your Profile Picture' %>
+                    <% end %>
+                    <p><%= current_user.username %></p>
+                </a>
+                <p>
+                    <%= link_to 'Sign out', '/signout' %>
+                </p>
+            <% else %>
+            <p><%= link_to 'Sign in', '/signin' %> | <%= link_to 'Register', '/register' %></p>
+            <% end %>
+        </div>
+    </header>
+
+    <% if flash[:alert] %>
+    <p id='alert'><%= flash[:alert] %></p>
+    <% end %>
+    <% if flash[:notice] %>
+    <p id='notice'><%= flash[:notice] %></p>
+    <% end %>
+    <main>
+        <%= yield %>
+    </main>
+    <footer>
+        <hr>
+        <p>© Jaime Gensler & Lela Smith</p>
+    </footer>
+</body>
+</html>
