@@ -6,3 +6,19 @@
     <% end %>
 </div>
 <div class="album-content">
+
+    <% if @user.albums.any? %>
+  <h4>Here are the albums for this user:</h4>
+
+  <% @user.albums.each do |album| %>
+    <ul>
+      <li>
+        <%= link_to album, album_path(album) %>
+      </li>
+    </ul>
+  <% end %>
+<% else %>
+  <p>No albums are listed for this user.</p>
+<% end %>
+
+</div>

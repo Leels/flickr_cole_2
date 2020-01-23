@@ -1,4 +1,5 @@
 class User < ApplicationRecord
+    has_many :albums
     has_one_attached :profile_picture
     has_one_attached :cover_photo
     attr_accessor :password
