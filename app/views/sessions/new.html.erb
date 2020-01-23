@@ -1,8 +1,15 @@
-<h2>Sign in</h2>
-<%= form_tag signin_path do %>
-  <%= label_tag :email %>
-  <%= text_field_tag :email %>
-  <%= label_tag :password %>
-  <%= password_field_tag :password %>
-  <%= submit_tag "Sign in" %>
-<% end %>
+<div id="sign-in">
+    <h2>Sign in</h2>
+    <%= form_tag signin_path do %>
+    <div>
+        <%= label_tag :email, 'Username or E-mail: ' %>
+        <%= text_field_tag :email %>
+    </div>
+    <div>
+        <%= label_tag :password, 'Password: ' %>
+        <%= password_field_tag :password %>
+    </div>
+    <button>Sign in</button>
+    <% end %>
+    <p>New here? <%= link_to 'Register an account with us!', new_user_path %></p>
+</div>

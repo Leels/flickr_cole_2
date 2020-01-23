@@ -16,7 +16,9 @@
 
 require 'simplecov'
 
-SimpleCov.start
+SimpleCov.start do
+    add_filter 'spec/rails_helper.rb'
+end
 
 RSpec.configure do |config|
   # rspec-expectations config goes here. You can use an alternate
@@ -98,4 +100,15 @@ RSpec.configure do |config|
   # as the one that triggered the failure.
   Kernel.srand config.seed
 =end
+
+  config.before(:each) do |test|
+      unless (test.metadata[:model] || test.metadata[:logged_out])
+          User.create!({username: 'CapyTest', email: 'capytest@test.com', password: 'password'})
+          visit '/'
+          click_on 'Sign in'
+          fill_in 'email', :with => 'capytest@test.com'
+          fill_in 'password', :with => 'password'
+          page.find('#sign-in').click_on 'Sign in'
+      end
+  end
 end

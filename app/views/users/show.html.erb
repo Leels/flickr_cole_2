@@ -1,24 +1,26 @@
 <div id="cover-photo">
-    <% if current_user.cover_photo.attached? %>
-        <%= image_tag current_user.cover_photo, alt: 'Your Cover Photo' %>
-    <% else %>
-        <%= image_tag 'default-cover.jpg', alt: 'Your Cover Photo' %>
-    <% end %>
+    <%=
+        image_tag ((@user.cover_photo.nil?) ?
+            'default-cover.jpg' :
+            current_user.profile_picture
+        ), alt: 'Your Cover Photo'
+    %>
 </div>
+
 <div class="album-content">
 
+    <h4><%= @user.username %>'s Albums</h4>
     <% if @user.albums.any? %>
-  <h4>Here are the albums for this user:</h4>
 
-  <% @user.albums.each do |album| %>
+    <% @user.albums.each do |album| %>
     <ul>
-      <li>
-        <%= link_to album, album_path(album) %>
-      </li>
+        <li>
+            <%= link_to album.name, user_album_path(@user.username, album) %>
+        </li>
     </ul>
-  <% end %>
-<% else %>
-  <p>No albums are listed for this user.</p>
-<% end %>
+    <% end %>
+    <% else %>
+    <p>No albums are listed for this user.</p>
+    <% end %>
 
 </div>

@@ -1,5 +1,5 @@
 <h2>New Album</h2>
-<%= form_for @album do |f| %>
+<%= form_for [@user, @album] do |f| %>
 <%= f.label "Album Name" %>
 <%= f.text_field :name %>
 <%= f.label "Album Description" %>

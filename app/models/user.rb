@@ -1,11 +1,11 @@
 class User < ApplicationRecord
-    has_many :albums
-    has_one_attached :profile_picture
-    has_one_attached :cover_photo
+    has_many :albums, dependent: :destroy
     attr_accessor :password
+
     validates_confirmation_of :password
-    validates :email, :presence => true, :uniqueness => true
-    validates :username, :presence => true, :uniqueness => true
+    validates :email, presence: true, uniqueness: true
+    validates :username, presence: true, uniqueness: true
+    
     before_save :encrypt_password
 
     def encrypt_password
