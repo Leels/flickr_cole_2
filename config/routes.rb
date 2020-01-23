@@ -1,22 +1,26 @@
 Rails.application.routes.draw do
     root to: 'homes#index'
-    get '/register' => 'users#new'
-    post '/users' => 'users#create'
 
-    get '/signin' => 'sessions#new'
-    post '/signin' => 'sessions#create'
-    get '/signout' => 'sessions#destroy'
+    #registration
+    get '/register',           to: 'users#new',         as: 'new_user'
+    post '/users',             to: 'users#create'
 
-    get    '/:username(.:format)', to: 'users#show', as: 'user'
-    get    '/:username(.:format)/edit' => 'users#edit'
-    patch  '/:username(.:format)' => 'users#update'
-    put    '/:username(.:format)' => 'users#update'
-    delete '/:username(.:format)' => 'users#destroy'
+    #sign-in / out
+    get '/signin',             to: 'sessions#new',      as: 'new_session'
+    post '/signin',            to: 'sessions#create'
+    get '/signout',            to: 'sessions#destroy',  as: 'destroy_session'
+    
+    #user paths
+    get    '/:username',       to: 'users#show',        as: 'user'
+    get    '/:username/edit',  to: 'users#edit',        as: 'edit_user'
+    patch  '/:username',       to: 'users#update'
+    put    '/:username',       to: 'users#update'
+    delete '/:username',       to: 'users#destroy'
 
-
-    scope '/:username(.:format)' do
-        resources :albums do
-            resources :photos
+    #nested resource paths
+    scope path: '/:username', as: 'user' do
+        resources :albums, except: [:index] do
+            resources :photos, except: [:index]
         end
     end
 end
